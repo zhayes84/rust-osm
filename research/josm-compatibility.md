@@ -1,6 +1,6 @@
 # JOSM compatibility boundaries for a building-edit prototype
 
-Research for [Wayfinder issue #4](https://github.com/zhayes84/rust-osm/issues/4), 2026-10-16. Reference revision: [`JOSM/josm@d663b2a601ba0f94376f48ee216a16f4a60a493a`](https://github.com/JOSM/josm/tree/d663b2a601ba0f94376f48ee216a16f4a60a493a). Findings below describe that revision, not an assertion about every JOSM release or plugin.
+Research for [Map JOSM compatibility surfaces that constrain a cross-platform prototype](https://github.com/zhayes84/rust-osm/issues/4), 2026-10-16. Reference revision: [`JOSM/josm@d663b2a601ba0f94376f48ee216a16f4a60a493a`](https://github.com/JOSM/josm/tree/d663b2a601ba0f94376f48ee216a16f4a60a493a). Findings below describe that revision, not an assertion about every JOSM release or plugin.
 
 ## Answer
 
