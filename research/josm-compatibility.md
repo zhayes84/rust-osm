@@ -6,7 +6,9 @@ Research for [Map JOSM compatibility surfaces that constrain a cross-platform pr
 
 A meaningful first prototype needs an explicit **editing behavior contract**, an imagery/projection context, and a comparable visual workload. It does not yet need a Java plugin runtime, complete MapCSS or preset compatibility, all file formats, or a framework choice. This is a research recommendation, not an approved scope or implementation plan.
 
-The user's reported task is moving nodes of existing buildings to accommodate additions or correct misalignment. That can exercise shared topology, selection and hit-testing, not just drawing a polygon quickly. The evidence below explains which decisions must be made before a benchmark can represent this task. No user dataset, plugin list, JOSM preferences, imagery provider, projection, or hardware profile was supplied; none is inferred.
+The user's reported task is moving nodes of existing buildings to accommodate additions or correct misalignment. They clarified that the pause occurs when grabbing a node, in roughly four to five populated city blocks, using Bing imagery and the default JOSM style. This focuses the initial investigation on acquisition/selection and the transition into dragging; it does not establish the cause or demonstrate a sustained-drag bottleneck. Shared topology, selection, and hit-testing remain relevant correctness contracts.
+
+The user supplied an installed-plugin list, recorded in the workload ticket. Which plugin operations are used or essential in this session remains unknown; installation alone establishes neither a compatibility requirement nor a cause of the pause. No reproducible dataset, complete JOSM preferences, imagery offset, projection, or hardware profile was supplied. The workload description and settings above are user reports, not independently reproduced measurements.
 
 ## Four different compatibility promises
 
@@ -14,7 +16,7 @@ The user's reported task is moving nodes of existing buildings to accommodate ad
 | --- | --- | --- |
 | Behavioral compatibility | Familiar actions, shortcuts, selection, geometry edits, and undo results | `JosmAction` connects commands to toolbar entries, global shortcuts, layer context, and selection listeners. Matching a menu label alone would not reproduce when an action is enabled. [Action source][actions] |
 | Data/configuration compatibility | Read or preserve OSM files, styles, presets, shortcut settings, imagery configuration, and sessions | Each is its own contract. A `.osm` document, a MapCSS style, a preset XML document, and a `.jos` session have different readers and semantics. [OSM reader][reader], [style loader][styles], [preset reader][presetreader], [session writer][session] |
-| Plugin capability ports | Reproduce a useful plugin's user-visible editing operation | This requires identifying actual capabilities the user needs. It does not imply loading that plugin's Java binary. No such capabilities have yet been named. |
+| Plugin capability ports | Reproduce a useful plugin's user-visible editing operation | This requires identifying actual capabilities the user needs. It does not imply loading that plugin's Java binary. Installed plugins are now known; their used or essential capabilities have not yet been identified. |
 | Unchanged Java plugin execution | Load existing plugin classes and satisfy their JOSM dependencies | JOSM loads plugin classes through class loaders; the plugin base exposes `MapFrame`, preference UI, and download-selector callbacks. This is a much broader boundary than a language-neutral edit command. [Plugin loader][pluginloader], [plugin callbacks][plugins] |
 
 The last row does not prove that bridging is impossible. It shows why promising it now would constrain the host object model and UI without evidence that this prototype needs it. Running Java code, satisfying JOSM APIs, reproducing Swing integrations, and preserving behavior are separate questions.
@@ -45,7 +47,7 @@ The MapCSS loader accepts standalone sources and archives; evaluation depends on
 
 Preset XML is parsed separately, with schema validation available and archive support. Presets distinguish object types and matching criteria, build editing UI, and produce undoable property changes; they can also participate in relation creation and role suggestions. Thus presets are both a data format and a behavior/UI contract. [Preset parser][presetreader], [preset behavior][presets]
 
-**Decision needed:** name the style used for comparison and the visual features it must exercise, especially selected nodes/ways, fills, strokes, and labels. Measure any deliberately simplified rendering as a separate experiment. Arbitrary MapCSS loading and full preset-dialog parity can be deferred if the selected task only moves geometry and preserves existing tags. Before later offering preset compatibility, choose and test a format/behavior subset explicitly.
+**Decision needed:** use the reported default JOSM style as the comparison baseline and identify the visual features it must exercise, especially selected nodes/ways, fills, strokes, and labels. Measure any deliberately simplified rendering as a separate experiment. Arbitrary MapCSS loading and full preset-dialog parity can be deferred if the selected task only moves geometry and preserves existing tags. Before later offering preset compatibility, choose and test a format/behavior subset explicitly.
 
 ### Validation and file/session fidelity
 
@@ -59,7 +61,7 @@ JOSM's file registry includes OSM XML, OSM change, PBF, GeoJSON, GPX, and other 
 
 ## Decisions to resolve before implementation
 
-1. **User input:** choose the exact building-edit gestures and identify essential plugins, custom styles, presets, and modified shortcuts in the real session. Research cannot substitute for this information.
+1. **User input:** refine the node-grab gesture and identify which installed-plugin operations, presets, or modified shortcuts are actually used or essential. Bing imagery and the default JOSM style are reported; the installed-plugin list alone does not establish needed capabilities.
 2. **Joint decision:** choose a bounded behavioral oracle, including connected geometry, selection/hover outcomes, undo/redo, metadata preservation, and coordinate tolerances. Do not demand pixel-identical UI unless that is explicitly intended.
 3. **Research plus workload selection:** establish imagery/projection/style conditions and record them alongside baseline results. An empty-background benchmark may isolate geometry work but cannot establish the performance of the reported workflow alone.
 4. **Joint decision:** choose a fixture and result-exchange boundary. Keep data/configuration compatibility promises separate from behavioral equivalence.
