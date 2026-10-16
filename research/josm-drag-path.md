@@ -1,6 +1,6 @@
 # JOSM existing-node drag path and measurement boundaries
 
-Research for [issue #2](https://github.com/zhayes84/rust-osm/issues/2), 2026-10-16. Source baseline: JOSM Git mirror commit `d663b2a601ba0f94376f48ee216a16f4a60a493a`. All source links below are pinned to that commit. This is static source research, not a profile, diagnosis, or replacement architecture decision. No application or performance tests were run.
+Research for [Trace JOSM node dragging and identify latency measurement points](https://github.com/zhayes84/rust-osm/issues/2), 2026-10-16. Source baseline: JOSM Git mirror commit `d663b2a601ba0f94376f48ee216a16f4a60a493a`. All source links below are pinned to that commit. This is static source research, not a profile, diagnosis, or replacement architecture decision. No application or performance tests were run.
 
 The reported symptom is lag while dragging existing building-outline nodes. The user's JOSM build, dataset, styles, plugins, renderer, hardware and display configuration are unknown. The trace covers ordinary select-mode movement of an existing node; virtual-node creation, rotation, scaling and merging introduce additional paths. A selected way or multiple selected objects changes how many nodes are moved.
 
