@@ -4,7 +4,7 @@ Research date: 2026-10-16. Resolves the factual investigation in [Identify editi
 
 Reference: JOSM/JOSM commit `d663b2a601ba0f94376f48ee216a16f4a60a493a`. All source links below pin that revision. Selected Java sources and tests were downloaded and read; tests were **not executed**, and no performance measurements were taken. This is a bounded source investigation, not an exhaustive compatibility specification.
 
-The user reports lag moving nodes of existing building outlines, including alignment corrections and extensions. Their dataset, JOSM version, plugins, styles, projection, and hardware are not yet known. The conclusions below describe the pinned reference, not a diagnosis of that session.
+The user reports a pause **when grabbing a node** of an existing building outline, in work involving alignment corrections and extensions. The session covers approximately four to five populated city blocks, with Bing imagery and the default style. The user supplied the installed-plugin list, recorded separately in the workload ticket. The exact dataset, JOSM version, projection, and hardware remain unknown. The conclusions below describe the pinned reference; they do not establish the cause of that initial pause or show that continued dragging is slow.
 
 ## Result
 
